@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    body {
+      height: 400px;
+    }
+    textarea {
+      width:95%;
+      height: inherit;
+    }
+  </style>
+<head>
+  <script>
+    window.onload = function() {
+        var button = document.querySelector("#myfile + button");
+        var input = document.getElementById("myfile");
+        var display = document.getElementById("DisplayText");
+        var text = null;
+        input.addEventListener("change", addDoc);
+        button.addEventListener("click", handleText)
+
+        function addDoc(event) {
+          var file = this.files[0]
+          var reader = new FileReader();      
+          reader.onload = function(e) {
+            text = reader.result;
+            button.removeAttribute("disabled");
+          }
+          reader.onerror = function(err) {
+            console.log(err, err.loaded
+                        , err.loaded === 0
+                        , file);
+            button.removeAttribute("disabled");
+          }
+          reader.readAsText(event.target.files[0]);
+        }
+        function handleText() {
+          display.textContent = text;
+          button.setAttribute("disabled", "disabled");
+          text = null; 
+        }
+
+    }
+		function encriptar(elemento){
+			var file = document.getElementsByTagName("textarea")[0].value;
+			var file_encoded = btoa(file);
+			document.getElementById("result").innerHTML = file_encoded;
+		}
+
+		function desencriptar(elemento){
+			var file = document.getElementsByTagName("textarea")[0].value;
+			var file_decoded = atob(file);
+			document.getElementById("result").innerHTML = file_decoded;
+		}
+  </script>
+</head>
+<body>
+  <input type="file" id="myfile" accept="text/*">
+  <button type="button" disabled>Abrir Arquivo</button><br><br>
+  <textarea id="DisplayText"></textarea>
+	<button type="submit" onclick="encriptar(this)">Encriptar</button>
+	<button type="submit" onclick="desencriptar(this)">Desencriptar</button>
+		<p id="result"></p>
+</body>
+</html>
